@@ -1,18 +1,18 @@
 /////////////////////////////////////////////////////////
-// °úÁ¦¸í: HW2. ¿¤¸®º£ÀÌÅÍ
+// ê³¼ì œëª…: HW2. ì—˜ë¦¬ë² ì´í„°
 
-//°úÁ¦°³¿ä: 
-// Ãş ÀÔ·Â ¸í·É¿¡ µû¶ó ¿¤¸®º£ÀÌÅÍ ÀÌµ¿ µ¿ÀÛÀ» ½ÇÇàÇÔ
-// Ãş ÀÔ·Â ¸í·É ¹æ¹ı
- // (1) SW(0~7)¿¡ ÀÇÇÑ Ãş ¸í·É ÀÔ·Â
-//  (2) JS(Joy-Stick)(LEFT, RIGHT)¿¡ ÀÇÇÑ Ãş ¸í·É ÀÔ·Â
- //Ãş ÀÌµ¿Àº LED(0~7)ÀÇ Á¡¸ê·Î Ç¥Çö
- //Reset State: 0Ãş (0ÃşºÎÅÍ ½ÃÀÛ)
-//»ç¿ëÇÑ ÇÏµå¿ş¾î(±â´É): GPIO,Joy-stick,LED,SW,Keyscan,Update_LED
-//Á¦ÃâÀÏ: 2024.5.15
-//Á¦ÃâÀÚ Å¬·¡½º: ¸ñ¿äÀÏ¹İ
-//              ÇĞ¹ø: 2021134050
-//              ÀÌ¸§: ÀÌÁØÇõ
+//ê³¼ì œê°œìš”: 
+// ì¸µ ì…ë ¥ ëª…ë ¹ì— ë”°ë¼ ì—˜ë¦¬ë² ì´í„° ì´ë™ ë™ì‘ì„ ì‹¤í–‰í•¨
+// ì¸µ ì…ë ¥ ëª…ë ¹ ë°©ë²•
+ // (1) SW(0~7)ì— ì˜í•œ ì¸µ ëª…ë ¹ ì…ë ¥
+//  (2) JS(Joy-Stick)(LEFT, RIGHT)ì— ì˜í•œ ì¸µ ëª…ë ¹ ì…ë ¥
+ //ì¸µ ì´ë™ì€ LED(0~7)ì˜ ì ë©¸ë¡œ í‘œí˜„
+ //Reset State: 0ì¸µ (0ì¸µë¶€í„° ì‹œì‘)
+//ì‚¬ìš©í•œ í•˜ë“œì›¨ì–´(ê¸°ëŠ¥): GPIO,Joy-stick,LED,SW,Keyscan,Update_LED
+//ì œì¶œì¼: 2024.5.15
+//ì œì¶œì í´ë˜ìŠ¤: ëª©ìš”ì¼ë°˜
+//              í•™ë²ˆ: 2021134050
+//              ì´ë¦„: ì´ì¤€í˜
 /////////////////////////////////////////////////////////
 
 #include "stm32f4xx.h"
@@ -26,76 +26,76 @@ uint16_t JOY_Scan(void);
 
 void BEEP(void);
 
-void Update_LED_Pattern(uint16_t input); //ºñÆ®¼ö Áõ°¡¿ë  ÇÔ¼öÁ¦ÀÛ
+void Update_LED_Pattern(uint16_t input); //ë¹„íŠ¸ìˆ˜ ì¦ê°€ìš©  í•¨ìˆ˜ì œì‘
 
 
 int main(void)
 {
-	_GPIO_Init();		// GPIO(LED(OUTPUT), SWITCH(INPUT)) ÃÊ±âÈ­
-	GPIOG->ODR &= ~0x00FF;	// ÃÊ±â°ª: LED0~7 Off
+	_GPIO_Init();		// GPIO(LED(OUTPUT), SWITCH(INPUT)) ì´ˆê¸°í™”
+	GPIOG->ODR &= ~0x00FF;	// ì´ˆê¸°ê°’: LED0~7 Off
     
 	//GPIO LED0 ON 
         GPIOG->ODR |= 0x0001; 	// GPIOG->ODR.0 'H'(LED ON)
     
 	while(1)
 	{
-                switch(KEY_Scan())      //SW°¡ ´­·ÁÁ®ÀÖ´ÂÁö È®ÀÎ
+                switch(KEY_Scan())      //SWê°€ ëˆŒë ¤ì ¸ìˆëŠ”ì§€ í™•ì¸
                 		{
 			case 0xFE00  : 	//SW0
                             BEEP();
-                            Update_LED_Pattern(0x0001); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0001); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
 
 			break;
 			case 0xFD00 : 	//SW1
                             BEEP();
-                            Update_LED_Pattern(0x0002); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0002); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
 
 			break;
                        case 0xFB00 : 	//SW2
                             BEEP();
-                            Update_LED_Pattern(0x0004); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0004); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
     
 			break;
                        case 0xF700 : 	//SW3
                             BEEP();
-                            Update_LED_Pattern(0x0008); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0008); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
  
 			break;
                        case 0xEF00 : 	//SW4
                             BEEP();
-                            Update_LED_Pattern(0x0010); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0010); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
  
 			break;
                         case 0xDF00 : 	//SW5
                             BEEP();
-                            Update_LED_Pattern(0x0020); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0020); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
 
                         break;
                         case 0xBF00 : 	//SW6
                             BEEP();
-                            Update_LED_Pattern(0x0040); //SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0040); //SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
     
 			break;
                         case 0x7F00 : 	//SW7
                             BEEP();
-                            Update_LED_Pattern(0x0080); // SW¿¡ ¸Â´Â LED °ª ´ëÀÔ
+                            Update_LED_Pattern(0x0080); // SWì— ë§ëŠ” LED ê°’ ëŒ€ì…
                             
 			break;
                        
 		}
-                switch(JOY_Scan()) //JOYSCANÀÌ ´­·ÁÁ®ÀÖ´ÂÁö È®ÀÎ
+                switch(JOY_Scan()) //JOYSCANì´ ëˆŒë ¤ì ¸ìˆëŠ”ì§€ í™•ì¸
                       {
 			case 0x01E0 :	// NAVI_LEFT
                         BEEP();
-                        if(0x0001==GPIOG->ODR) //ODRÀÌ led0¹øÀÌ ºÒÀÌ ÄÑÁ®ÀÖ´Â°æ¿ì
+                        if(0x0001==GPIOG->ODR) //ODRì´ led0ë²ˆì´ ë¶ˆì´ ì¼œì ¸ìˆëŠ”ê²½ìš°
                         {
-                        //°æ°íÀ½
+                        //ê²½ê³ ìŒ
                         DelayMS(200); 
                         BEEP();
                         break;
                         }
                         else{
-                        //µô·¹ÀÌ ÈÄ ºñÆ®¼ö Áõ°¡
+                        //ë”œë ˆì´ í›„ ë¹„íŠ¸ìˆ˜ ì¦ê°€
                         DelayMS(500);
                         GPIOG->ODR >>= 1;
 			break;
@@ -103,15 +103,15 @@ int main(void)
                         
 			case 0x02E0:	// NAVI_RIGHT
                         BEEP();
-                        if(0x0080==GPIOG->ODR)//ODRÀÌ led7¹øÀÌ ºÒÀÌ ÄÑÁ®ÀÖ´Â°æ¿ì
+                        if(0x0080==GPIOG->ODR)//ODRì´ led7ë²ˆì´ ë¶ˆì´ ì¼œì ¸ìˆëŠ”ê²½ìš°
                         {
-                         //°æ°íÀ½
+                         //ê²½ê³ ìŒ
                         DelayMS(200);
                         BEEP();
                         break;
                         }
                         else{
-                         //µô·¹ÀÌ ÈÄ ºñÆ®¼ö Áõ°¡
+                         //ë”œë ˆì´ í›„ ë¹„íŠ¸ìˆ˜ ì¦ê°€
                         DelayMS(500);
                         GPIOG->ODR <<= 1;
 			break;
@@ -121,55 +121,55 @@ int main(void)
 	}
 }
 
-/* GPIO (GPIOG(LED), GPIOH(Switch)) ÃÊ±â ¼³Á¤	*/
+/* GPIO (GPIOG(LED), GPIOH(Switch)) ì´ˆê¸° ì„¤ì •	*/
 void _GPIO_Init(void)
 {
-	// LED (GPIO G) ¼³Á¤ : Output mode
+	// LED (GPIO G) ì„¤ì • : Output mode
 	RCC->AHB1ENR	|=  0x00000040;	// RCC_AHB1ENR : GPIOG(bit#6) Enable							
 	GPIOG->MODER 	|=  0x00005555;	// GPIOG 0~7 : Output mode (0b01)						
 	GPIOG->OTYPER	&= ~0x00FF;	// GPIOG 0~7 : Push-pull  (GP8~15:reset state)	
 	GPIOG->OSPEEDR 	|=  0x00005555;	// GPIOG 0~7 : Output speed 25MHZ Medium speed 
-        //¾Õ¿¡ 0000ÀÎ°ÍÀº »ı·«°¡´É ÇÏÁö¸¸ µÚ¿¡ 0000Àº »ı·« ºÒ°¡
+        //ì•ì— 0000ì¸ê²ƒì€ ìƒëµê°€ëŠ¥ í•˜ì§€ë§Œ ë’¤ì— 0000ì€ ìƒëµ ë¶ˆê°€
     
-	// SW(GPIO H) ¼³Á¤ : Input mode
-	RCC->AHB1ENR    |=  0x00000080;	// RCC_AHB1ENR : GPIOH(bit#7)¿¡ Clock Enable							
+	// SW(GPIO H) ì„¤ì • : Input mode
+	RCC->AHB1ENR    |=  0x00000080;	// RCC_AHB1ENR : GPIOH(bit#7)ì— Clock Enable							
 	GPIOH->MODER 	&= ~0xFFFF0000;	// GPIOH 8~15 : Input mode (reset state)				
 	GPIOH->PUPDR 	&= ~0xFFFF0000;	// GPIOH 8~15 : Floating input (No Pull-up, pull-down) :reset state
-        //pullup ÀúÇ×ÀÌ ÀÖ¾î¼­ pullupÀúÇ×À» È°¼ºÈ­¸¦ ¾ÈÇß´Ù.
+        //pullup ì €í•­ì´ ìˆì–´ì„œ pullupì €í•­ì„ í™œì„±í™”ë¥¼ ì•ˆí–ˆë‹¤.
         
         
-	// Buzzer (GPIO F) ¼³Á¤ : Output mode 
+	// Buzzer (GPIO F) ì„¤ì • : Output mode 
 	RCC->AHB1ENR	|=  0x00000020; // RCC_AHB1ENR : GPIOF(bit#5) Enable							
 	GPIOF->MODER 	&= ~0x000C0000;	// GPIOF 9 : Output mode (0b01)						
 	GPIOF->MODER 	|= 0x00040000;	// GPIOF 9 : Push-pull  
 
-	//Joy Stick SW(PORT I) ¼³Á¤
+	//Joy Stick SW(PORT I) ì„¤ì •
 	RCC->AHB1ENR	|= 0x00000100;	// RCC_AHB1ENR GPIOI Enable
 	GPIOI->MODER	&=~0x000FFC00;	// GPIOI 5~9 : Input mode (reset state)
-        //5ÇÉÀ» input mode 0b0000 0000 0000 1111 1111 1100 0000 0000
+        //5í•€ì„ input mode 0b0000 0000 0000 1111 1111 1100 0000 0000
 	GPIOI->PUPDR	&= ~0x000FFC00;	// GPIOI 5~9 : Floating input (No Pull-up, pull-down) (reset state)
 }	
 
-uint8_t key_flag = 0; //SW°¡ °è¼Ó ´­·ÁÁ³´ÂÁö¸¦ ¾Ë¸®´Â ÀÎµ¦½º
+uint8_t key_flag = 0; //SWê°€ ê³„ì† ëˆŒë ¤ì¡ŒëŠ”ì§€ë¥¼ ì•Œë¦¬ëŠ” ì¸ë±ìŠ¤
 uint16_t KEY_Scan(void)	// input key SW0 - SW7 
 { 
 	uint16_t key;
-	key = GPIOH->IDR & 0xFF00;	// any key pressed ? 8°³ÀÇ ½ºÀ§Ä¡ °ªÀÌ ÀÎ½Ä
+	key = GPIOH->IDR & 0xFF00;	// any key pressed ? 8ê°œì˜ ìŠ¤ìœ„ì¹˜ ê°’ì´ ì¸ì‹
 	if(key == 0xFF00)		// if no key, check key off 
-	{	if(key_flag == 0)    // 1.¾Æ¹«°Íµµ ¾ÈÇÒ‹š °è¼Ó ¿©±â·Î µµ´Â°ÍÀÌ´Ù
+	{	if(key_flag == 0)    // 1.ì•„ë¬´ê²ƒë„ ì•ˆí• Â‹Âš ê³„ì† ì—¬ê¸°ë¡œ ë„ëŠ”ê²ƒì´ë‹¤
 			return key;
-		else //4. ¶§´Â ¼ø°£  kel_flag°¡ ÃÊ±âÈ­ µÈ´Ù.
+		else //4. ë•ŒëŠ” ìˆœê°„  kel_flagê°€ ì´ˆê¸°í™” ëœë‹¤.
 		{	DelayMS(10);
 			key_flag = 0;
 			return key;
 		}
 	}
-	else				// if key input, check continuous key 8Áß ÇÑ°³´Â ´­·ÁÁ³´Ù
-	{	if(key_flag != 0)	// if continuous key, treat as no key input //3.Áö±İ ´©¸£°í ÀÖ´Ù ÇÏÀÚ¸¸ »à ¼Ò¸®´Â ¾È³­´Ù
+	else				// if key input, check continuous key 8ì¤‘ í•œê°œëŠ” ëˆŒë ¤ì¡Œë‹¤
+	{	if(key_flag != 0)	// if continuous key, treat as no key input //3.ì§€ê¸ˆ ëˆ„ë¥´ê³  ìˆë‹¤ í•˜ìë§Œ ì‚‘ ì†Œë¦¬ëŠ” ì•ˆë‚œë‹¤
 			return 0xFF00;
-		else			// if new key,delay for debounce //2. ²Ú´©¸£°í ÀÖÀ¸¸é Ã¹¹øÂ° »àÇÑ´Ù
-		{	key_flag = 1; // keyflag °¡  ´­·ÁÁ³´Ù sw input
-			DelayMS(10); // ±â´Ù¸²
+		else			// if new key,delay for debounce //2. ê¾¹ëˆ„ë¥´ê³  ìˆìœ¼ë©´ ì²«ë²ˆì§¸ ì‚‘í•œë‹¤
+		{	key_flag = 1; // keyflag ê°€  ëˆŒë ¤ì¡Œë‹¤ sw input
+			DelayMS(10); // ê¸°ë‹¤ë¦¼
  			return key; //0xFE00
 		}
 	}
@@ -204,7 +204,7 @@ uint16_t JOY_Scan(void)	// input joy stick NAVI_*
 
 
 
-void DelayMS(unsigned short wMS) //delayMS ÁøÇà
+void DelayMS(unsigned short wMS) //delayMS ì§„í–‰
 {
 	register unsigned short i;
 	for (i=0; i<wMS; i++)
@@ -213,7 +213,7 @@ void DelayMS(unsigned short wMS) //delayMS ÁøÇà
 
 
 
-void DelayUS(unsigned short wUS) //delayUS ÁøÇà
+void DelayUS(unsigned short wUS) //delayUS ì§„í–‰
 {
 	volatile int Dly = (int)wUS*17;
 	for(; Dly; Dly--);
@@ -230,16 +230,16 @@ void BEEP(void)			/* beep for 30 ms */
 
 
 
-void Update_LED_Pattern(uint16_t input) { //inputÀÌ µé¾î°¡¸é  ´ë¼Ò°ü°è¸¦ ºñ±³
+void Update_LED_Pattern(uint16_t input) { //inputì´ ë“¤ì–´ê°€ë©´  ëŒ€ì†Œê´€ê³„ë¥¼ ë¹„êµ
     
-    if(GPIOG->ODR<input)     //ÇöÀç led°ªÀÌ input°ªº¸´Ù ÀÛÀ»¶§
+    if(GPIOG->ODR<input)     //í˜„ì¬ ledê°’ì´ inputê°’ë³´ë‹¤ ì‘ì„ë•Œ
     {
-      while(GPIOG->ODR!=input) //ÁöÁ¤ÇÑ LED¿¡  µµ´ŞÇÒ¶§ ±îÁö ¹İº¹
+      while(GPIOG->ODR!=input) //ì§€ì •í•œ LEDì—  ë„ë‹¬í• ë•Œ ê¹Œì§€ ë°˜ë³µ
       {
-      DelayMS(500); //delay0.5ÃÊ
-      GPIOG->ODR <<= 1; //ºñÆ®¼ö ÀÌµ¿
+      DelayMS(500); //delay0.5ì´ˆ
+      GPIOG->ODR <<= 1; //ë¹„íŠ¸ìˆ˜ ì´ë™
       }
-      //µµ´ŞÇÏ°í ³ª¼­ Beep ÁøÇà
+      //ë„ë‹¬í•˜ê³  ë‚˜ì„œ Beep ì§„í–‰
       BEEP();
       DelayMS(500);
       BEEP();
@@ -248,21 +248,21 @@ void Update_LED_Pattern(uint16_t input) { //inputÀÌ µé¾î°¡¸é  ´ë¼Ò°ü°è¸¦ ºñ±³
       
       }
     
-    else if(GPIOG->ODR>input)  //ÇöÀç led°ªÀÌ input °ªº¸´Ù ³ôÀ»¶§
+    else if(GPIOG->ODR>input)  //í˜„ì¬ ledê°’ì´ input ê°’ë³´ë‹¤ ë†’ì„ë•Œ
     {
-      while(GPIOG->ODR!=input) //ÁöÁ¤ÇÑ LED¿¡  µµ´ŞÇÒ¶§ ±îÁö ¹İº¹
+      while(GPIOG->ODR!=input) //ì§€ì •í•œ LEDì—  ë„ë‹¬í• ë•Œ ê¹Œì§€ ë°˜ë³µ
       {
       DelayMS(500); //delay
-      GPIOG->ODR >>= 1; //ºñÆ®¼ö ÀÌµ¿
+      GPIOG->ODR >>= 1; //ë¹„íŠ¸ìˆ˜ ì´ë™
       }
-      //µµ´ŞÇÏ°í ³ª¼­ beep ÁøÇà
+      //ë„ë‹¬í•˜ê³  ë‚˜ì„œ beep ì§„í–‰
       BEEP();
       DelayMS(500);
       BEEP();
       DelayMS(500);
       BEEP();      
     }
-    //°°Àº °æ¿ì ¿¬¼Ó beep ÁøÇà
+    //ê°™ì€ ê²½ìš° ì—°ì† beep ì§„í–‰
     else
     {
       DelayMS(200);
